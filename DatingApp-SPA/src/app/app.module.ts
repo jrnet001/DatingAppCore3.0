@@ -1,3 +1,4 @@
+import { appRoutes } from './routes';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -12,6 +13,10 @@ import { AuthService } from './_services/auth.service';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ErrorInteceptorProvider } from './_services/error.interceptor';
+import { MemberListComponent } from './member-list/member-list.component';
+import { ListsComponent } from './lists/lists.component';
+import { MessagesComponent } from './messages/messages.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -20,19 +25,22 @@ import { ErrorInteceptorProvider } from './_services/error.interceptor';
       ValueComponent,
       NavComponent,
       HomeComponent,
-      RegisterComponent
+      RegisterComponent,
+      MemberListComponent,
+      ListsComponent,
+      MessagesComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
       BsDropdownModule.forRoot(),
-
+      RouterModule.forRoot(appRoutes, { enableTracing: true }),
    ],
    providers: [
       AuthService,
       ErrorInteceptorProvider,
-      AlertifyService,
+      AlertifyService
    ],
    bootstrap: [
       AppComponent
