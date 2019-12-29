@@ -27,4 +27,8 @@ export class UserService {
     // return this.httpClient.get<User>(this.baseURL + '/users/' + id, httpOptions);
     return this.httpClient.get<User>(this.baseURL + '/users/' + id);
   }
+
+  updateUser(id: number, user: User){
+    return this.httpClient.put(this.baseURL + '/users/' + id, user);
+  }
 }
