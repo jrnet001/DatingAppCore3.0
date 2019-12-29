@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -7,13 +8,16 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class AuthService {
-  baseURL = 'http://localhost:5000/api/auth/';
+  baseURL = environment.apiURL + '/auth/';
+
   jwtHelper = new JwtHelperService();
   decodedToken: any;
 
   constructor(private http: HttpClient) {}
 
   login(model: any) {
+    console.log(this.baseURL);
+
     return this.http.post(this.baseURL + 'login', model).pipe(
       map((response: any) => {
         const user = response;
