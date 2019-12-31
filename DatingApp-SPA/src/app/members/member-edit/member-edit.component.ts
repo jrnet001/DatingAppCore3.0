@@ -15,6 +15,8 @@ export class MemberEditComponent implements OnInit {
   @ViewChild('editForm', { static: true }) editForm: NgForm;
 
   user: User;
+  photoURL: string;
+
   // Prompt user if they try to leave the site and have not saved.
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
@@ -34,6 +36,8 @@ export class MemberEditComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.user = data['user'];
     });
+
+    this.authService.currentPhotURL.subscribe(photoURL => this.photoURL = photoURL);
   }
 
   updateUser() {
@@ -48,5 +52,9 @@ export class MemberEditComponent implements OnInit {
           this.alertifyService.error(error);
         }
       );
+  }
+
+  updateMainPhoto(photURL) {
+    this.user.photoURL = photURL;
   }
 }

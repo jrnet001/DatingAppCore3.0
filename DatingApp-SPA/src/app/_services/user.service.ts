@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 export class UserService {
   baseURL = environment.apiURL;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   getUsers(): Observable<User[]> {
     // return this.httpClient.get<User[]>(this.baseURL + '/users', httpOptions);
@@ -28,7 +28,16 @@ export class UserService {
     return this.httpClient.get<User>(this.baseURL + '/users/' + id);
   }
 
-  updateUser(id: number, user: User){
+  updateUser(id: number, user: User) {
     return this.httpClient.put(this.baseURL + '/users/' + id, user);
   }
+
+  setMainPhoto(userId: number, id: number) {
+    return this.httpClient.post(this.baseURL + '/users/' + userId + '/photos/' + id + '/setMain', {});
+  }
+
+  deletePhoto(userId: number, id: number) {
+    return this.httpClient.delete(this.baseURL + '/users/' + userId + '/photos/' + id);
+  }
+
 }
