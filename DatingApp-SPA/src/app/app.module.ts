@@ -12,12 +12,15 @@ import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angu
 import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AlertifyService } from './_services/alertify.service';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import { AppComponent } from './app.component';
 import { ValueComponent } from './value/value.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavComponent } from './nav/nav.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './_services/auth.service';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
@@ -55,12 +58,14 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     // RouterModule.forRoot(appRoutes, { enableTracing: true }),
     RouterModule.forRoot(appRoutes),
@@ -74,6 +79,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     TabsModule.forRoot(),
     NgxGalleryModule,
     FileUploadModule,
+    BsDatepickerModule.forRoot(),
+
   ],
   providers: [AuthService, ErrorInteceptorProvider, AlertifyService, AuthGuard,
     MemberListResolver, MemberDetailResolver, MemberEditResolver, PreventUnsavedChanges,
