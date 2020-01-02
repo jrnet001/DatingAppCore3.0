@@ -15,6 +15,8 @@ import { AlertifyService } from './_services/alertify.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TimeAgoPipe} from 'time-ago-pipe';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 
 import { AppComponent } from './app.component';
@@ -82,6 +84,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     NgxGalleryModule,
     FileUploadModule,
     BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot(),
 
   ],
   providers: [AuthService, ErrorInteceptorProvider, AlertifyService, AuthGuard,

@@ -27,14 +27,30 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await _repo.GetUsers();
+
+            var currentUserID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var userFromRepo = await _repo.GetUser(currentUserID);
+
+            userParams.UserId = currentUserID;
+
+            if (string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
+
+            }
+
+            var users = await _repo.GetUsers(userParams);
             var userToReturn = _mapper.Map<IEnumerable<UserForListDTO>>(users);
+
+            Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPage);
 
             return Ok(userToReturn);
         }
-        [HttpGet("{id}", Name="GetUser" )]
+
+        [HttpGet("{id}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _repo.GetUser(id);
@@ -45,7 +61,7 @@ namespace DatingApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDTO userForUpdateDTO)
         {
- //int jj = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //int jj = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
