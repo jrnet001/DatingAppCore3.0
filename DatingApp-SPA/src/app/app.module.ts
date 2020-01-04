@@ -5,6 +5,7 @@ import { MemberEditResolver } from './_resolver/member-edit.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberListResolver } from './_resolver/member-list.resolver';
 import { MemberDetailResolver } from './_resolver/member-detail.resolver';
+import { ListsResolver } from './_resolver/lists.resolver';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { appRoutes } from './routes';
@@ -14,10 +15,9 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AlertifyService } from './_services/alertify.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {TimeAgoPipe} from 'time-ago-pipe';
+import { TimeAgoPipe } from 'time-ago-pipe';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
-
 
 import { AppComponent } from './app.component';
 import { ValueComponent } from './value/value.component';
@@ -41,10 +41,10 @@ export function tokenGetter() {
   return localStorage.getItem('token');
 }
 
-export class CustomHammerConfig extends HammerGestureConfig  {
+export class CustomHammerConfig extends HammerGestureConfig {
   overrides = {
-      pinch: { enable: false },
-      rotate: { enable: false }
+    pinch: { enable: false },
+    rotate: { enable: false }
   };
 }
 
@@ -71,7 +71,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     FormsModule,
     ReactiveFormsModule,
     BsDropdownModule.forRoot(),
-    // RouterModule.forRoot(appRoutes, { enableTracing: true }),
+   // RouterModule.forRoot(appRoutes, { enableTracing: true }),
     RouterModule.forRoot(appRoutes),
     JwtModule.forRoot({
       config: {
@@ -88,10 +88,11 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     ButtonsModule.forRoot(),
 
   ],
-  providers: [AuthService, ErrorInteceptorProvider, AlertifyService, AuthGuard,
-    MemberListResolver, MemberDetailResolver, MemberEditResolver, PreventUnsavedChanges,
-    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
+  providers: [AuthService, ErrorInteceptorProvider, AlertifyService, AuthGuard, 
+    MemberListResolver, MemberDetailResolver, MemberEditResolver,  PreventUnsavedChanges,
+    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
+    ListsResolver
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,3 +1,9 @@
+import { AuthService } from './../_services/auth.service';
+import { Pagination, PaginationResult } from './../_models/pagination';
+import { ActivatedRoute } from '@angular/router';
+import { AlertifyService } from '../_services/alertify.service';
+import { UserService } from '../_services/user.service';
+import { User } from '../_models/user';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +13,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListsComponent implements OnInit {
 
-  constructor() { }
+  users: User[];
+  pagination: Pagination;
+  likesParam: string;
+
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private alertifyService: AlertifyService,
+    private route: ActivatedRoute
+  ) {};
 
   ngOnInit() {
+    this.route.data.subscribe(data => {
+      this.users = data['users'].result;
+      this.pagination = data['users'].pagination;
+    });
+    this.likesParam = 'Likers';
   }
+
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.loadUsers();
+    this.likesParam = 'Likers';
+  }
+
+  loadUsers() {
+    this.userService.getUsers(this.pagination.currentPage,
+      this.pagination.itemsPerPage,
+      null,
+      this.likesParam).subscribe(
+        (res: PaginationResult<User[]>) => {
+          this.users = res.result;
+          this.pagination = res.pagination;
+        },
+        error => {
+          this.alertifyService.error(error);
+        }
+      );
+  }
+
+
 
 }

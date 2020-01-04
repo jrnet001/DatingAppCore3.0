@@ -48,7 +48,21 @@ export class MemberListComponent implements OnInit {
     this.loadUsers();
   }
 
+  checkAgeRanges() {
+    if (this.userParams.minAge < 0 || this.userParams.minAge > 99) {
+      this.alertifyService.error('Min Age must be greater then 0 and less the 99');
+      this.resetFilters();
+
+    }
+
+    if (this.userParams.maxAge < 0 || this.userParams.maxAge > 99) {
+      this.alertifyService.error('Max Age must be greater then 0 and less the 99');
+      this.resetFilters();
+
+    }
+  }
   loadUsers() {
+    this.checkAgeRanges();
     this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams).subscribe(
       (res: PaginationResult<User[]>) => {
         this.users = res.result;
